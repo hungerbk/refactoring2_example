@@ -1,21 +1,26 @@
 export class Order {
+  #data;
   constructor(aRecord) {
-    this._data = aRecord;
+    this.#data = aRecord;
   }
 
   get quantity() {
-    return this._data.quantity;
+    return this.#data.quantity;
   }
   get itemPrice() {
-    return this._data.itemPrice;
+    return this.#data.itemPrice;
   }
 
+  get discount() {
+    return Math.max(0, this.quantity - 500) * this.itemPrice * 0.05;
+  }
+
+  get shipping() {
+    return Math.min(this.quantity * this.itemPrice * 0.1, 100);
+  }
+  // 할인, 배송
   get price() {
-    return (
-      this.quantity * this.itemPrice -
-      Math.max(0, this.quantity - 500) * this.itemPrice * 0.05 +
-      Math.min(this.quantity * this.itemPrice * 0.1, 100)
-    );
+    return this.quantity * this.itemPrice - this.discount() + this.shipping();
   }
 }
 

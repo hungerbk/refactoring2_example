@@ -1,5 +1,5 @@
-export function readingsOutsideRange(station, min, max) {
-  return station.readings.filter((r) => r.temp < min || r.temp > max);
+export function readingsOutsideRange(station, range) {
+  return station.readings.filter(r => range.isOutOfRange(r.temp));
 }
 
 const station = {
@@ -12,16 +12,39 @@ const station = {
     { temp: 51, time: '2016-11-10 09:50' },
   ],
 };
+
+class TemperatureRange {
+  #min;
+  #max;
+  constructor(data) {
+    this.#min = data.min;
+    this.#max = data.max;
+  }
+
+  get min() {
+    return this.#min;
+  }
+
+  get max() {
+    return this.#max;
+  }
+
+  get isOutOfRange(temp) {
+    return temp < this.#min || temp > this.#max
+  }
+}
+
 const operationPlan = {
   temperatureFloor: 51,
   temperatureCeiling: 53,
 };
 
-readingsOutsideRange(
+const outsideRange = readingsOutsideRange(
   station,
-  operationPlan.temperatureFloor,
-  operationPlan.temperatureCeiling,
+  new TemperatureRange(operationPlan)
 );
+
+console.log(outsideRange);
 
 // 매개변수 객체 만들기 (책 6.8)
 // 상황 : 역의 온도를 특정 온도 이하, 특정 온도 이상의 값만 필터링해서 가져오는 함수가 있습니다. 이 함수는 역(station)과 최소 최대값을 매개변수로 받습니다.

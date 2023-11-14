@@ -2,6 +2,7 @@ export class Order {
   constructor(data) {
     this.priority = data.priority;
   }
+  get isPriority() {}
 }
 
 const orders = [

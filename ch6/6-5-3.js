@@ -1,5 +1,5 @@
-export function inNewEngland(aCustomer) {
-  return ['MA', 'CT', 'ME', 'VT', 'NH', 'RI'].includes(aCustomer.address.state);
+export function inNewEngland(state) {
+  return ['MA', 'CT', 'ME', 'VT', 'NH', 'RI'].includes(state); // 어떤 사람이 주에 포함되는지를 알고 싶은 것이 아님. 그냥 주만 필요하기 때문에 이렇게 받는 것이 낫다
 }
 
 // 함수 선언 바꾸기 (책 6.5)

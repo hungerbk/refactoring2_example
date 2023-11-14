@@ -1,17 +1,36 @@
 export function priceOrder(product, quantity, shippingMethod) {
   const basePrice = product.basePrice * quantity;
+
+  // 할인액 계산
   const discount =
     Math.max(quantity - product.discountThreshold, 0) *
     product.basePrice *
     product.discountRate;
+
+  // 케이스별 배송비 계산
   const shippingPerCase =
     basePrice > shippingMethod.discountThreshold
       ? shippingMethod.discountedFee
       : shippingMethod.feePerCase;
+
+  // 수량에 따른 배송비 계산
   const shippingCost = quantity * shippingPerCase;
+
+  // 최종 금액 계산
   const price = basePrice - discount + shippingCost;
+
   return price;
 }
+
+function calculateDiscountedPrice(product, quantity) {
+  return (
+    Math.max(quantity - product.discountThreshold, 0) *
+    product.basePrice *
+    product.discountRate
+  );
+}
+
+function calculateShippingCost() {}
 
 // 사용 예:
 const product = {

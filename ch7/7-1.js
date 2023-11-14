@@ -1,3 +1,4 @@
+// 클래스 + getter
 const organization = { name: 'Acme Gooseberries', country: 'GB' };
 
 organization.name = 'nice lion';

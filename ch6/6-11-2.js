@@ -4,13 +4,18 @@ if (!process.argv[2]) {
   throw new Error('파일 이름을 입력하세요');
 }
 
+// 파일을 입력받는다. = 네트워크 동작과 거의 유사하다
+// 입력받은 파일을 검증한다.
 const fileName = `./${process.argv[2]}.json`;
 if (!fs.existsSync(fileName)) {
   throw new Error('파일이 존재하지 않습니다');
 }
 
+// 동기적으로 파일을 읽어온다.
 const rawData = fs.readFileSync(fileName);
+// JSON 데이터를 파싱한다
 const orders = JSON.parse(rawData);
+// 조건에 맞춰서 보여준다
 if (process.argv.includes('-r')) {
   console.log(orders.filter((order) => order.status === 'ready').length);
 } else {
